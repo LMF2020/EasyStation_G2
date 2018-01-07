@@ -1,0 +1,96 @@
+webview {
+    height: 1212px;
+    width: 100vw;
+    position: absolute;
+    top: calc(608px + 100px);
+    left: 0;
+    right: 0;
+}
+
+video {
+    object-fit: fill;
+    width: 100vw;
+    height: 608px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+.show {
+    display: block;
+}
+
+#bar {
+    width: 100vw;
+    height: 100px;
+    overflow: hidden;
+    background: #FFC102;
+    position: absolute;
+    left: 0;
+    top: 608px;
+}
+
+#homeIcon {
+    width: 60px;
+    height: 70px;
+    float: left;
+    padding-top: 18px;
+}
+
+.scroll-text {
+    height: 100px;
+    overflow: hidden;
+    font-family: "微软雅黑", Verdana;
+    z-index: 1;
+    float: left;
+    width: 300px;
+}
+
+.scroll-text ul li {
+    padding-left: 10px;
+    font-size: 18px;
+    padding-top: 5px;
+}
+
+.scroll-img {
+    height: 70px;
+    float: left;
+    padding-top: 15px;
+    margin-left: 25px;
+}
+
+.marqueeWrapper {
+    background: #f3a9c0;
+    z-index: 1;
+    height: 100px;
+    word-wrap: break-word;
+    word-break: normal;
+    font-size: 54px;
+    font-family: "微软雅黑", Verdana;
+    width: 720px;
+    letter-spacing: 6px;
+    overflow: hidden;
+    float: right;
+}
+
+.screen-img {
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+}
+
+.screen-wrapper {
+    width: 100%;
+    position: absolute;
+    top: 708px;
+    height: 100%;
+}

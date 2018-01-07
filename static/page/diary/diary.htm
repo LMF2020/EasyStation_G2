@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+    <link href="css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="css/diary.css" rel="stylesheet" type="text/css" />
+    <link href="css/smartzoom.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="wrap">
+        <input id="test" value="0" style="display:none;">
+        <a href="javascript:void(0);" id="btnLayout" class="btnLayout">
+            <img src="images/02.png" />
+        </a>
+        <a href="javascript:void(0);" id="btnDate" class="btnDate">
+            <img src="images/01.png" />
+        </a>
+        <div class="left-side" id="left-side"></div>
+        <!-- MIDDLE SIDE -->
+        <div class="middle-side" id="middle-side">
+            <div class="diary" style="content-zooming:none;">
+                <div class="diary-main" id="diary-main">
+                    <div class="cs_wrapper">
+
+                        <!-- SMART ZOOM -->
+                        <div id="imgContainer">
+                            <img id="imageFullScreen" />
+                        </div>
+                        <div id="positionButtonDiv">
+                            <p>
+                                <span>
+                                    <img id="zoomInButton" class="zoomButton" src="images/zoomIn.png" />
+                                    <img id="zoomOutButton" class="zoomButton" src="images/zoomOut.png" />
+                                </span>
+                            </p>
+                            <p>
+                                <span class="positionButtonSpan">
+                                    <map name="positionMap" class="positionMapClass">
+                                        <area id="topPositionMap" shape="rect" coords="20,0,40,20" />
+                                        <area id="leftPositionMap" shape="rect" coords="0,20,20,40" />
+                                        <area id="rightPositionMap" shape="rect" coords="40,20,60,40" />
+                                        <area id="bottomPositionMap" shape="rect" coords="20,40,40,60" />
+                                    </map>
+                                    <img src="images/position.png" usemap="#positionMap" />
+                                </span>
+                            </p>
+                        </div>
+                        <!-- SMART ZOOM -->
+                        <div class="cs_slider"></div>
+
+                    </div>
+                    <p id="layout"></p>
+                    <p id="date"></p>
+                </div>
+                <!-- MIAN PART -->
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="right-side" id="right-side"></div>
+        <!-- RIGHT SIDE -->
+        <div class="clear"></div>
+    </div>
+    <script>
+        window.$ = window.jQuery = require('jquery')       
+        var attachFastClick = require('fastclick');
+        attachFastClick(document.body); 
+    </script>
+    <script src="js/e-smart-zoom-jquery.min.js"></script>
+    <script src="js/diary.js"></script>
+</body>
+
+</html>
