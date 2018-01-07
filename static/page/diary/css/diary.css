@@ -1,0 +1,141 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    background-color: #FBFAF8;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.wrap {
+    width: 1080px;
+    height: 1212px;
+    padding: 8px 0px;
+    text-align: center;
+    background: url(../images/diaryBg.jpg) no-repeat center bottom;
+    position: relative;
+    z-index: 99;
+}
+
+.left-side {
+    float: left;
+    background: url(../images/arrow-left.png) no-repeat center;
+    width: 68px;
+    height: 1300px;
+    cursor: pointer;
+}
+
+.right-side {
+    float: right;
+    background: url(../images/arrow-right.png) no-repeat center;
+    width: 68px;
+    height: 1300px;
+    cursor: pointer;
+}
+
+.middle-side {
+    width: 942px;
+    height: 1200px;
+    padding: 0px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.diary {
+    padding: 0px;
+}
+
+.diary .diary-main {
+    width: 942px;
+    height: 1212px;
+    background-color: #FFF;
+    float: left;
+    border: solid 1px #efefef;
+    border-radius: 6px;
+}
+
+.btnDate {
+    position: absolute;
+    background: rgba(253, 188, 29, 1);
+    width: 36px;
+    height: 56px;
+    left: 32px;
+    top: 38px;
+    text-align: center;
+    line-height: 56px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    z-index: 9999;
+}
+
+.btnLayout {
+    position: absolute;
+    background: rgba(253, 188, 29, 1);
+    width: 36px;
+    height: 56px;
+    left: 32px;
+    top: 95px;
+    text-align: center;
+    line-height: 56px;
+    color: #FFF;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    z-index: 9999;
+}
+
+#date {
+    position: absolute;
+    top: 30px;
+    left: -544px;
+    width: 476px;
+    background: rgba(58, 56, 63, 0.5);
+    min-height: 113px;
+    padding-left: 8px;
+    z-index: 9999;
+}
+
+#layout {
+    position: absolute;
+    top: 30px;
+    left: -298px;
+    width: 230px;
+    background: rgba(58, 56, 63, 0.5);
+    min-height: 113px;
+    padding-left: 8px;
+    z-index: 9999;
+}
+
+#date a,
+#layout a {
+    display: block;
+    float: left;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    color: #EEE;
+    text-decoration: none;
+    margin: 6px;
+    padding: 8px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#date a:hover,
+#layout a:hover {
+    background-color: #222;
+}

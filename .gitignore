@@ -1,0 +1,7 @@
+node_modules/
+.vscode
+.idea/
+.git/
+*.bak
+.gitee/
+/doc/installers/windows/release-builds
