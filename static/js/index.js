@@ -14,7 +14,7 @@ dev_mode = CONFIG['DEV']
 const homeWebview = document.querySelector('#homePage')
 
 // time interval to show screensaver
-var LOCK_SCREEN_INTERVAL = 80 * 1000
+var LOCK_SCREEN_INTERVAL = 8000//80 * 1000
 // time interval to change slide of screensaver
 var SCREEN_SILDE_INTERVAL = 20 * 1000
 // screen height
@@ -39,35 +39,28 @@ var IndexModule = (function () {
 
         var frameUrl = $('#homePage').attr('src')
         var isHome = new RegExp("/page/home/home.html").test(frameUrl);
-        var isScreen = $("#screenSilderPage").is(':visible');
-        if (!isHome && isScreen) { // is not home and is screen
-            $('#homePage').fadeIn(2500)
-            $("#screenSilderPage").hide()
-            setTimeout(() => {
-                $('#homePage').attr('src', COMJS.HOME_URL)
-            }, 5);
-        } else if (isScreen) { // is home and is screen          
-            $('#homePage').fadeIn(2500)
-            $("#screenSilderPage").hide()
-            setTimeout(() => {
-                $('#homePage').attr('src', COMJS.HOME_URL)
-            }, 5);
-        } else if (!isHome) { // is not home and is not screen
+        var isScreen = $("#screenSilderPage").css('opacity') === '1'
+
+        if (!isHome && isScreen) { // screen but not home
+            $('#homePage').attr('src', COMJS.HOME_URL)
+            $('#frame-wrapper').animate({ opacity: 1 })
+            $('#screenSilderPage').animate({ opacity: 0 })
+        } else if (isScreen) { // screen and home         
+            hideScreen()
+        } else if (!isHome) { // not screen and not home
             $('#homePage').attr('src', COMJS.HOME_URL)
         } else {
-            // show home page
+            // IPC to show home page
             homeWebview.send('SHOW_HOME')
         }
-        // other case : is home and is not screen : nothing to do
+        // other case : home but not screen : nothing to do
     }
 
     // load linked page in web frame 
     var showFrameLinkPage = function (url) {
-        setTimeout(() => {
-            $('#homePage').attr('src', url)
-        }, 5);
-        $('#homePage').fadeIn(3500)
-        resetScreenTimeOut()
+        $('#homePage').attr('src', url)
+        $('#frame-wrapper').animate({ opacity: 1 })
+        $('#screenSilderPage').animate({ opacity: 0 })
     }
 
     // IPC register
@@ -262,14 +255,14 @@ var IndexModule = (function () {
 
     // show screen
     var showScreen = function () {
-        $('#homePage').hide()
-        $("#screenSilderPage").show()
+        $('#frame-wrapper').animate({ opacity: 0 })
+        $("#screenSilderPage").animate({ opacity: 1 })
     }
 
     // hide screen
     var hideScreen = function () {
-        $("#screenSilderPage").hide()
-        $('#homePage').show()
+        $("#screenSilderPage").animate({ opacity: 0 })
+        $('#frame-wrapper').animate({ opacity: 1 })
     }
 
     var resetScreenTimeOut = function () {
@@ -312,13 +305,11 @@ if (dev_mode) {
     })
 }
 
-console.log(process.platform)
-
-// reset screen timeout 
-// $(document).on('click touchend', function (e) {
-//     IndexModule.resetScreenTimeOut()
-// })
-
-$(document).mouseup(function(e){
+$(document).mouseup(function (e) {
     IndexModule.resetScreenTimeOut()
 })
+
+homeWebview.addEventListener('did-stop-loading', function () {
+    // alert(111)
+    // $("#screenSilderPage").animate({ opacity: 0 })
+});

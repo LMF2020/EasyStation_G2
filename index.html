@@ -29,11 +29,13 @@
   </div>
   <!--HOME-->
   <!--z-index-->
-  <webview id="homePage" src="./static/page/home/home.html" style="z-index:2" nodeintegration plugins></webview>
+  <div id="frame-wrapper">
+    <webview id="homePage" src="./static/page/home/home.html" style="z-index:2" nodeintegration plugins disablewebsecurity></webview>
+  </div>
   <!--SCREENSAVER-->
   <!--z-index-->
   <div class="screen-wrapper">
-    <div id="screenSilderPage" style="display:none; z-index:1"></div>
+    <div id="screenSilderPage" style="opacity:0; z-index:1"></div>
   </div>
   <script>
     window.$ = window.jQuery = require('jquery')
