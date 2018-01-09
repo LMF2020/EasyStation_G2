@@ -60,6 +60,9 @@ var DiaryModule = (function () {
                     hiddenlayer()
                 })
                 showDiaryByDate(_diary[0].Key)
+
+                bindSmartZoom()
+
             }
         }
     }
@@ -76,16 +79,17 @@ var DiaryModule = (function () {
                         if (_index == 0) $("#imageFullScreen").attr({ 'src': 'file:///' + news_dir + '/' + item.Key + '/' + _i })
                         $("#layout").append('<a href="javascript:void(0)">' + (_i.split(".")[0]).toUpperCase() + '</a>')
                     })
-                    $("#layout>a").click(function () { moveSliderLink($(this).index()) })
+                    // $("#layout>a").click(function () { moveSliderLink($(this).index()) })
                     _order = 0
                     $("#left-side").css({ 'opacity': '0' })
                     $("#right-side").css({ 'opacity': '1' })
 
-                    bindSmartZoom()
+                    // bindSmartZoom()
                 }
             })
         }
     }
+
 
     var hiddenlayer = function () {
         $("#layout").css({ left: '-238px' })
@@ -105,8 +109,8 @@ var DiaryModule = (function () {
     // bind zoom event
     var bindSmartZoom = function () {
         $('#imageFullScreen').smartZoom({ 'containerClass': 'zoomableContainer' })
-        $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').on("click click", moveButtonClickHandler)
-        $('#zoomInButton,#zoomOutButton').on("click click", zoomButtonClickHandler)
+        $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').on("click", moveButtonClickHandler)
+        $('#zoomInButton,#zoomOutButton').on("click", zoomButtonClickHandler)
     }
 
     var zoomButtonClickHandler = function (e) {
@@ -137,6 +141,11 @@ var DiaryModule = (function () {
     }
 
     var bindListeners = function () {
+
+        // trigger to select by page number
+        $("#layout").on('click', 'a', function () { 
+            moveSliderLink($(this).index())
+        })
 
         // trigger to show date selector panel
         $("#btnDate").on('click', function (e) {
