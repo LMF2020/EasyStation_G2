@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="user-scalable=no"/>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1"/>
   <link rel="stylesheet" href="./static/css/coin-slider-styles.css">
   <link rel="stylesheet" href="./static/css/index.css" />
   <link rel="stylesheet" href="./static/css/reset.css">
@@ -30,7 +32,7 @@
   <!--HOME-->
   <!--z-index-->
   <div id="frame-wrapper">
-    <webview id="homePage" src="./static/page/home/home.html" style="z-index:2" nodeintegration plugins disablewebsecurity></webview>
+    <webview id="homePage" src="./static/page/home/home.html" style="z-index:2" preload="./static/js/inject.js" nodeintegration plugins disablewebsecurity></webview>
   </div>
   <!--SCREENSAVER-->
   <!--z-index-->
@@ -41,7 +43,7 @@
     window.$ = window.jQuery = require('jquery')
   </script>
   <script src='./static/js/coin-slider.min.js'></script>
-
+  <script src="./static/js/flv.js"></script>
   <script>
     require('./static/js/com.js')
     require('./static/js/index.js')

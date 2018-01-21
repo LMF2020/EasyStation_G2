@@ -123,43 +123,41 @@ var HomeModule = (function () {
     }
 
     var initEvt = function () {
-        $('.menu-icon').on({
-            click: function (e) {
-                e.preventDefault();
-                var me = $(this);
-                var type = me.attr('id');
-                switch (type) {
-                    case '1':
-                    case '2':
-                    case '3':
-                    case '4':
-                    case '5':
-                    case '6':
-                    case '7':
-                    case '9':
-                    case '10':
-                    case '15':
-                    case '11':
-                        tip(me)
-                        break;
-                    case '8':
-                        // other icon
-                        showOther()
-                        break;
-                    case '12':
-                        // newspaper
-                        OpenPage('OPEN_AHNEWS')
-                        break;
-                    case '13':
-                        OpenPage('OPEN_AHFC')
-                        break;
-                    case '14':
-                        OpenPage('OPEN_BOOKSTORE')
-                        break;
-                    default:
-                }
+        $('.menu-icon').on('click',function (e) {
+            // e.preventDefault();
+            var me = $(this);
+            var type = me.attr('id');
+            switch (type) {
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '9':
+                case '10':
+                case '15':
+                case '11':
+                    tip(me)
+                    break;
+                case '8':
+                    // other icon
+                    showOther()
+                    break;
+                case '12':
+                    // newspaper
+                    OpenPage('OPEN_AHNEWS')
+                    break;
+                case '13':
+                    OpenPage('OPEN_AHFC')
+                    break;
+                case '14':
+                    OpenPage('OPEN_BOOKSTORE')
+                    break;
+                default:
             }
-        });
+        })
 
         ipcRenderer.on('SHOW_HOME', function () {
             showHome()
@@ -185,3 +183,10 @@ var HomeModule = (function () {
 })()
 
 HomeModule.init()
+
+window.onerror = function () { return true; }
+document.oncontextmenu = function () { return false; }
+document.onpaste = function () { return false; }
+document.oncopy = function () { return false; }
+document.oncut = function () { return false; }
+document.onselectstart = function () { return false; }

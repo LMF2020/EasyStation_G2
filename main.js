@@ -11,10 +11,10 @@ const url = require('url')
 global.CONFIG = require('./config.json');;
 
 // register flash plugin
-const develop = /--develop/.test(process.argv[2]);
+const develop = false;
 let asarDir = '../app.asar.unpacked/plugins/';
 if (develop) {
-  asarDir = '.';
+  asarDir = './plugins/';
 }
 let pluginName = 'pepflashplayer32_28_0_0_126.dll'
 const flashplayer = path.join(__dirname, asarDir + pluginName)
@@ -35,7 +35,7 @@ function createWindow() {
     width: width,
     height: height,
     frame: false,
-    webPreferences: { // essential for plugins load
+    webPreferences: { // required if need use plugins
       plugins: true
     }
   })
