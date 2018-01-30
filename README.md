@@ -1,3 +1,9 @@
+#### Update Log
+`2018-01-31`
+1. start automatically on system startup
+2. data checking and updates from remote server on system startup (via FTP)
+3. fix performance issues
+
 #### electorn document
 https://electronjs.org/docs
 
