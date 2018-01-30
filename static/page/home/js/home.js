@@ -32,10 +32,9 @@ const { ipcRenderer } = require('electron')
 var path = require('path')
 var fs = require('fs')
 // global config
-const remote = require('electron').remote
-var CONFIG = remote.getGlobal('CONFIG')
+var CONFIG = require('electron').remote.getGlobal('CONFIG')
 // root dir
-var database = CONFIG['DB_ROOT']
+var database = CONFIG['cache.local_dir']
 
 // home module
 var HomeModule = (function () {

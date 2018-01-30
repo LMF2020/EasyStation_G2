@@ -1,8 +1,7 @@
 var path = require('path')
 var fs = require('fs')
-const remote = require('electron').remote
-var CONFIG = remote.getGlobal('CONFIG')
-database = CONFIG['DB_ROOT']
+var CONFIG = require('electron').remote.getGlobal('CONFIG')
+database = CONFIG['cache.local_dir']
 var news_dir = path.join(database, "Diary")
 
 var DiaryModule = (function () {

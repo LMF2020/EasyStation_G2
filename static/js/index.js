@@ -3,12 +3,20 @@ const { ipcRenderer } = require('electron')
 
 var path = require('path')
 var fs = require('fs')
+var mkdirp = require('mkdirp')
 // global config
-const remote = require('electron').remote
-var CONFIG = remote.getGlobal('CONFIG')
-// root dir
-database = CONFIG['DB_ROOT']
-dev_mode = CONFIG['DEV']
+var CONFIG = require('electron').remote.getGlobal('CONFIG')
+// local dir
+local_dir = CONFIG['cache.local_dir']
+dev_mode = CONFIG['dev']
+supportFTP = CONFIG['ftp.support']
+
+// remote config
+var ftpHost = CONFIG['ftp.remote_host']
+var ftpPort = CONFIG['ftp.remote_port']
+var ftpUser = CONFIG['ftp.remote_user']
+var ftpPwd = CONFIG['ftp.remote_password']
+var ftpRootDir = CONFIG['ftp.remote_dir']
 
 // home webview
 const homeWebview = document.querySelector('#homePage')
@@ -27,19 +35,19 @@ var flvPlayer
 var IndexModule = (function () {
 
     // video dir 
-    var videoDir = path.join(database, "AD")
+    var videoDir = path.join(local_dir, "AD")
     // whether dir
-    var whetherDir = path.join(database, "LWeather")
+    var whetherDir = path.join(local_dir, "LWeather")
     // marquee dir
-    var marqueeMenuDir = path.join(database, "txtMarquee")
+    var marqueeMenuDir = path.join(local_dir, "txtMarquee")
     // screen dir
-    var screenAdsDir = path.join(database, "LMarquee")
+    var screenAdsDir = path.join(local_dir, "LMarquee")
 
     // show home page
     var showHomePage = function () {
 
         var frameUrl = $('#homePage').attr('src')
-        var isHome = new RegExp("/page/home/home.html").test(frameUrl);
+        var isHome = new RegExp("/page/home/home.html").test(frameUrl)
         var isScreen = $("#screenSilderPage").css('opacity') === '1'
 
         if (!isHome && isScreen) { // screen but not home
@@ -155,7 +163,7 @@ var IndexModule = (function () {
         for (key in imgs) {
             var img = imgs[key]
             // var imgPath = path.join(dir, img['name'] + "." + img['ext'])
-            var imgPath = database + '/' + 'LMarquee' + '/' + img['name'] + "." + img['ext']
+            var imgPath = local_dir + '/' + 'LMarquee' + '/' + img['name'] + "." + img['ext']
             $("#screenSilderPage").append("<img class='screen-img' src='" + imgPath + "' linkto='" + img['url'] + "'/>")
         }
 
@@ -247,9 +255,9 @@ var IndexModule = (function () {
             if (typeof flvPlayer !== "undefined") {
                 if (flvPlayer != null) {
                     flvPlayer.unload()
-                    flvPlayer.detachMediaElement();
+                    flvPlayer.detachMediaElement()
                     flvPlayer.destroy()
-                    flvPlayer = null;
+                    flvPlayer = null
                 }
             }
             try {
@@ -259,10 +267,10 @@ var IndexModule = (function () {
                     var flvPlayer = flvjs.createPlayer({
                         type: 'mp4',
                         url: url
-                    });
-                    flvPlayer.attachMediaElement(videoEl);
-                    flvPlayer.load();
-                    flvPlayer.play();
+                    })
+                    flvPlayer.attachMediaElement(videoEl)
+                    flvPlayer.load()
+                    flvPlayer.play()
                 }
 
             } catch (e) {
@@ -311,7 +319,74 @@ var IndexModule = (function () {
     }
 })()
 
-IndexModule.init()
+/**
+ * FTP support
+ */
+if (supportFTP) {
+    // https://stackoverflow.com/questions/34805165/downloading-multiple-file-from-ftp-site-using-node-js
+    // connect to ftp
+    const jsftp = require("jsftp")
+    const ftpConf = {
+        host: ftpHost,
+        port: ftpPort, // defaults to 21
+        user: ftpUser, // defaults to "anonymous"
+        pass: ftpPwd, // defaults to "@anonymous"
+        useList: false,
+        debugMode: true
+    }
+    // const Ftp = new jsftp(ftpConf)
+    // loop and list all files
+    var len = 1
+    function done() {
+        // Aync Task finished
+        if (--len === 0) {
+            console.warn("FTP update finished")
+            IndexModule.init()
+        }
+    }
+    var loopDirs = function (remote_dir) {
+        new jsftp(ftpConf).ls(remote_dir, function (err, fileList) {
+            len += fileList.length
+            if (err) return console.error(err)
+            fileList.forEach(file => {
+                if (file.type == 1) { // if dir given
+                    var remoteDir = path.join(remote_dir, file.name)
+                    loopDirs(remoteDir)
+                } else { // if file given
+                    // compare and store on local
+                    var remoteFile = path.join(remote_dir, file.name)
+                    // prefix
+                    var cachePrefix = remote_dir.substr(ftpRootDir.length)
+                    // path + prefix 
+                    var cachedDir = path.join(local_dir, cachePrefix) // 根目录截取
+                    // create parents
+                    mkdirp(cachedDir)
+                    // path + prefix + filename
+                    var localFile = path.join(cachedDir, file.name)
+                    // console.log(localFile)
+                    new jsftp(ftpConf).get(remoteFile, localFile, err => {
+                        if (err) {
+                            // console.error(err, localFile, remoteFile)
+                            done()
+                            return
+                        }
+                        // console.log("File update finished!")
+                        done()
+                    })
+                }
+            })
+            // Read directory completion
+            done()
+        })
+    }
+
+    loopDirs(ftpRootDir)
+} else {
+
+    // if not support FTP
+    IndexModule.init()
+
+}
 
 // debug webview on dev mode
 if (dev_mode) {

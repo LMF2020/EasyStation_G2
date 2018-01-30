@@ -21,6 +21,9 @@ const flashplayer = path.join(__dirname, asarDir + pluginName)
 app.commandLine.appendSwitch('ppapi-flash-path', flashplayer);
 app.commandLine.appendSwitch('ppapi-flash-version', '28.0.0.126');
 
+app.setLoginItemSettings({
+  openAtLogin: true
+})
 // app.disableHardwareAcceleration()
 
 // Keep a global reference of the window object, if you don't, the window will

@@ -1,4 +1,10 @@
 {
-    "DB_ROOT": "C:/TouchScreenAPP/Files",
-    "DEV": false
+    "cache.local_dir": "D:/TouchScreenAPP/Files",
+    "ftp.remote_dir": "/touchscreenapp/files",
+    "ftp.remote_host": "127.0.0.1",
+    "ftp.remote_user": "anonymous",
+    "ftp.remote_password": "anonymous@",
+    "ftp.remote_port": "21",
+    "ftp.support": false,
+    "dev": false
 }
