@@ -1,5 +1,5 @@
 {
-    "cache.local_dir": "D:/TouchScreenAPP/Files",
+    "cache.local_dir": "C:/TouchScreenAPP/Files",
     "ftp.remote_dir": "/touchscreenapp/files",
     "ftp.remote_host": "127.0.0.1",
     "ftp.remote_user": "anonymous",

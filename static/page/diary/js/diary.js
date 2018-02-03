@@ -12,13 +12,13 @@ var DiaryModule = (function () {
     var init = function () {
         bindListeners()
         // read news from local disk
-        var newsData = readLocalSync()
+        var item = readLocalSync()
         // show first diary page
-        showDiary(newsData)
+        showDiary(item)
     }
 
     var readLocalSync = function () {
-        var newsData = {
+        var item = {
             FilesList: [],
             State: 0
         }
@@ -29,17 +29,19 @@ var DiaryModule = (function () {
                 // check if date format is yyyy-mm-dd
                 if (isDir && file_name.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/)) {
                     var imgs = fs.readdirSync(dateDir)
-                    newsData.FilesList.push({
+                    item.FilesList.push({
                         Key: file_name,
                         Value: imgs
                     })
                 }
             })
-            newsData.State = 1
+            if (item.FilesList.length > 0) {
+                item.State = 1
+            }
         } catch (error) {
             console.log('read news dir failed', error)
         }
-        return newsData
+        return item
     }
 
     // show diary
@@ -47,6 +49,10 @@ var DiaryModule = (function () {
         if (item.State > 0) {
             if (_diary != item.FilesList) {
                 _diary = item.FilesList
+
+                // dir size
+                var _len = _diary.length
+                
                 $("#date").html('')
                 // create date ui
                 $(_diary).each(function (index, item) {
@@ -58,7 +64,7 @@ var DiaryModule = (function () {
                     showDiaryByDate($(this).html())
                     hiddenlayer()
                 })
-                showDiaryByDate(_diary[0].Key)
+                showDiaryByDate(_diary[_len - 1].Key)
 
                 bindSmartZoom()
 
@@ -142,7 +148,7 @@ var DiaryModule = (function () {
     var bindListeners = function () {
 
         // trigger to select by page number
-        $("#layout").on('click', 'a', function () { 
+        $("#layout").on('click', 'a', function () {
             moveSliderLink($(this).index())
         })
 

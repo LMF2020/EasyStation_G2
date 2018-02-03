@@ -8,11 +8,45 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
-global.CONFIG = require('./config.json');;
+///********************************************************* */
+///********************************************************* */
+///********************************************************* */
+// check if aPath is JSON file or not
+const fs = require('fs')
+function isFileSync(aPath) {
+  try {
+    var isFile = fs.statSync(aPath).isFile()
+    if (isFile) {
+      JSON.parse(fs.readFileSync(aPath))
+      return true
+    }
+    return false
+  } catch (e) {
+    console.error(e)
+    if (e.code === 'ENOENT') {
+      return false
+    } else {
+      return false
+      // throw e;
+    }
+  }
+}
+// read custom config file
+const myConfig = path.join(__dirname, '../app.asar.unpacked/config.json')
+// var myConfig = 'C:/developer/config.json'
+if (isFileSync(myConfig)) {
+  global.CONFIG = require(myConfig)
+} else { // read default config file
+  global.CONFIG = require('./config.json')
+}
+
+///********************************************************* */
+///********************************************************* */
+///********************************************************* */
 
 // register flash plugin
 const develop = false;
-let asarDir = '../app.asar.unpacked/plugins/';
+let asarDir = '../app.asar.unpacked/plugins/'
 if (develop) {
   asarDir = './plugins/';
 }
