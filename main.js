@@ -32,13 +32,13 @@ function isFileSync(aPath) {
   }
 }
 // read custom config file
-const myConfig = path.join(__dirname, '../app.asar.unpacked/config.json')
+// const myConfig = path.join(__dirname, '../app.asar.unpacked/config.json')
 // var myConfig = 'C:/developer/config.json'
-if (isFileSync(myConfig)) {
-  global.CONFIG = require(myConfig)
-} else { // read default config file
+// if (isFileSync(myConfig)) {
+//  global.CONFIG = require(myConfig)
+// } else { // read default config file
   global.CONFIG = require('./config.json')
-}
+// }
 
 ///********************************************************* */
 ///********************************************************* */

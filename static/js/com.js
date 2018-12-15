@@ -59,6 +59,7 @@ COMJS = (function () {
                 console.log('The file is not image format', file)
             }
         })
+        console.log(urls)
         // mapping image name and image url
         for (const key in imgs) {
             // compare image name

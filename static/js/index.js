@@ -99,7 +99,7 @@ var IndexModule = (function () {
 
         // marquee menu button
         $('#imgScroll').on('click', 'img', function (e) {
-            // e.preventDefault()
+            e.preventDefault()
             var findPage = false
             var linkto = $(this).attr('linkto')
             // validate external page url
@@ -285,7 +285,7 @@ var IndexModule = (function () {
 
     // }
 
-    // Play videos on loop
+    // Play videos for loop
     var startPlayVideos = function (dir) {
         var videoSource = []
         fs.readdirSync(dir).forEach(function (file) {
@@ -306,11 +306,13 @@ var IndexModule = (function () {
             }
         }
         function playme(videoNum) {
-            // console.log("currently playing->" + videoSource[videoNum])
+            
+            console.log("currently playing->" + videoSource[videoNum])
             try {
                 document.getElementById("videoAd").setAttribute("src", videoSource[videoNum])
                 document.getElementById("videoAd").load()
                 document.getElementById("videoAd").play()
+                
             } catch (e) {
                 console.log('play errors')
             }
@@ -318,6 +320,8 @@ var IndexModule = (function () {
         document.getElementById('videoAd').addEventListener('ended', myHandler, false)
         if (videoCount > 0) {
             document.getElementById("videoAd").setAttribute("src", videoSource[0])
+            document.getElementById("videoAd").load()
+            document.getElementById("videoAd").play()
         }
     }
 

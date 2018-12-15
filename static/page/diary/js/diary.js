@@ -36,6 +36,12 @@ var DiaryModule = (function () {
                 }
             })
             if (item.FilesList.length > 0) {
+                // Only remain latest 7-days paper
+                var _arr = item.FilesList;
+                if(_arr.length > 7){
+                    item.FilesList = _arr.slice(_arr.length - 7)
+                }
+
                 item.State = 1
             }
         } catch (error) {
